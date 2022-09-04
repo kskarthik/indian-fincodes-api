@@ -30,10 +30,10 @@ pages:
     - job: generate_json
       artifacts: true
   script:
-    - mkdir tmp &&\
-      mv json tmp/ &&\
-      mv news tmp/ &&\
-      mv tmp public
+    - mkdir tmp
+    - mv json tmp/
+    - mv news tmp/
+    - mv tmp public
   artifacts:
     paths:
       - public
