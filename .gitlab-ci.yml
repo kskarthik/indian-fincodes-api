@@ -2,6 +2,7 @@ image: python:3.10-alpine
 stages:
   - build
   - test
+  - deploy
 
 generate_json:
   stage: build
@@ -22,6 +23,7 @@ hsn_sac_tests:
     - pytest
 
 pages:
+  stage: deploy
   needs:
     - job: generate_json
       artifacts: true
@@ -31,4 +33,4 @@ pages:
     paths:
       - public
   only:
-    - master
+    - main
