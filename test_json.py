@@ -1,0 +1,59 @@
+import json
+
+hsn_sac_data: list
+hsn_data: list
+sac_data: list
+
+with open("json/hsn-sac-codes.json") as f:
+    hsn_sac_data = json.loads(f.read())
+
+with open("json/hsn-codes.json") as f:
+    hsn_data = json.loads(f.read())
+
+with open("json/sac-codes.json") as f:
+    sac_data = json.loads(f.read())
+
+# check combined hsn & sac file
+def test_check_length():
+    assert len(hsn_sac_data) > 0
+
+
+def test_hsn_exists():
+    code_found = False
+    for i in hsn_sac_data:
+        if i["code"] == 8212:
+            code_found = True
+    assert code_found
+
+
+def test_sac_exists():
+    code_found = False
+    for i in hsn_sac_data:
+        if i["code"] == 995414:
+            code_found = True
+    assert code_found
+
+
+# check individual hsn & sac files
+def test_hsn_codes():
+    assert len(hsn_data) > 0
+
+
+def test_hsn_exists_in_hsn_codes():
+    code_found = False
+    for i in hsn_sac_data:
+        if i["code"] == 8212:
+            code_found = True
+    assert code_found
+
+
+def test_sac_codes():
+    assert len(sac_data) > 0
+
+
+def test_sac_exists_in_sac_codes():
+    code_found = False
+    for i in hsn_sac_data:
+        if i["code"] == 995414:
+            code_found = True
+    assert code_found

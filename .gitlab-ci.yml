@@ -1,0 +1,36 @@
+image: python:3.10-alpine
+stages:
+  - build
+  - test
+  - deploy
+
+generate_json:
+  stage: build
+  script:
+    - pip install requests openpyxl
+    - python3 hsn2json.py
+  artifacts:
+    paths:
+      - json
+
+hsn_sac_tests:
+  stage: test
+  needs:
+    - job: generate_json
+      artifacts: true
+  script:
+    - pip install pytest
+    - pytest
+
+pages:
+  stage: deploy
+  needs:
+    - job: generate_json
+      artifacts: true
+  script:
+    - mkdir tmp && mv json tmp/ && mv tmp public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
