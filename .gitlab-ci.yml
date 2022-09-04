@@ -9,9 +9,11 @@ generate_json:
   script:
     - pip install requests openpyxl
     - python3 hsn2json.py
+    - python3 news2json.py
   artifacts:
     paths:
       - json
+      - news
 
 hsn_sac_tests:
   stage: test
@@ -28,7 +30,10 @@ pages:
     - job: generate_json
       artifacts: true
   script:
-    - mkdir tmp && mv json tmp/ && mv tmp public
+    - mkdir tmp &&\
+      mv json tmp/ &&\
+      mv news tmp/ &&\
+      mv tmp public
   artifacts:
     paths:
       - public

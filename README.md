@@ -2,45 +2,61 @@
 
 This repository provides HSN & SAC codes of Indian GST as json files, Generated using gitlab's CI/CD infra
 
-base_url: `htttps://kskarthik.gitlab.io/gst-json`
+Base URL: `htttps://kskarthik.gitlab.io/gst-json`
 
-# Endpoints
+# HSN/SAC Codes
 
-- `/json/hsn-codes.json`: Returns a json which contains an array of hsn code as objects
+## Endpoints
 
-Example:
+- `/json/hsn-codes.json`: Contains an array of hsn code as objects
+
+- `/json/sac-codes.json`: Contains an array of sac code as objects
+
+- `/json/hsn-sac-codes.json`: Contains an array of both hsn & sac code as objects
+
+Schema for all hsn/sac json files:
 
 ```json
 [
   {
-    "code": `integer`,
-    "desciption": `string`
+    "code": integer,
+    "desciption": string
   }
 ]
 ```
 
-- `/json/sac-codes.json`: Returns a json which contains an array of sac code as objects
+# GST News
 
-Example:
+Base URL: `htttps://kskarthik.gitlab.io/gst-json`
+
+## Endpoints
+
+- `news/summary.json` - Contains gst news summary from portal as an array of objects
+
+Schema:
 
 ```json
 [
-  {
-    "code": `integer`,
-    "desciption": `string`
-  }
+    {
+      "id": integer,
+      "title": string,
+      "order": integer,
+      "date": string,
+      "IsExternal": string,
+      "linkURl": null
+    },
 ]
 ```
 
-- `/json/hsn-sac-codes.json`: Returns a json which contains an array of both hsn & sac code as objects
+- `news/{id}.json` - Contains detailed news info, where {id} is the key of an news object in `summary.json`
 
-Example:
+Schema:
 
 ```json
-[
-  {
-    "code": `integer`,
-    "desciption": `string`
-  }
-]
+{
+  "content": string,
+  "refID": integer,
+  "title": string,
+  "date": string
+}
 ```
