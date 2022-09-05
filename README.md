@@ -1,11 +1,9 @@
 # GST JSON Files
 
-This repository provides HSN & SAC codes of Indian GST as json files, Generated using gitlab's CI/CD infra.
+This repository provides HSN & SAC codes, gst news of Indian GST as json files, Generated using gitlab's CI/CD infra.
 Data is refreshed every hour using gitlab's pipeline schedules
 
-Base URL: `htttps://kskarthik.gitlab.io/gst-json`
-
-# HSN/SAC Codes
+Base URL: https://kskarthik.gitlab.io/gst-json
 
 ## Endpoints
 
@@ -25,12 +23,6 @@ Schema for all hsn/sac json files:
   }
 ]
 ```
-
-# GST News
-
-Base URL: `htttps://kskarthik.gitlab.io/gst-json`
-
-## Endpoints
 
 - `news/summary.json` - Contains gst news summary from portal as an array of objects
 
