@@ -57,3 +57,9 @@ def test_sac_exists_in_sac_codes():
         if i["code"] == 995414:
             code_found = True
     assert code_found
+
+
+def test_news_summary():
+    with open("news/summary.json", "r") as f:
+        news_list = json.loads(f.read())
+        assert len(news_list) > 0
