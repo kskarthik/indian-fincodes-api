@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json, os
 import requests as r
 
@@ -15,7 +16,6 @@ custom_headers = {
 def generate_posts(news_summary):
     """Generate a single json file for each item in summary"""
     for item in news_summary:
-        print(item)
         response = r.get(url=portal + str(item["id"]), headers=custom_headers)
         if response.status_code == 200:
             with open(f"news/{item['id']}.json", "w") as f:

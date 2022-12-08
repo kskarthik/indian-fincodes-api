@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 License: GPLv3 https://www.gnu.org/licenses/gpl-3.0-standalone.html
 
@@ -31,12 +32,12 @@ try:
     print("⚙ Extracting HSN/SAC from the spreadsheet ...")
 
     for i in hsn.values:
-        if i[0] != "HSN Code":
+        if i[0] != "HSN CODES":
             hsn_array.append({"code": int(i[0]), "desciption": i[1]})
 
     for i in sac.values:
 
-        if i[0] != "SAC Code":
+        if i[0] != "SAC Codes":
             sac_array.append({"code": i[0], "description": i[1]})
 
     print("HSN codes: ", len(hsn_array))
