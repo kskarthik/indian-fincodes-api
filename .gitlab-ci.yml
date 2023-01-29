@@ -12,8 +12,8 @@ generate_json:
     - python3 news2json.py
   artifacts:
     paths:
-      - json
-      - news
+      - json/
+      - news/
 
 hsn_sac_tests:
   stage: test
