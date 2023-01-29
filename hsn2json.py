@@ -19,7 +19,6 @@ try:
 
     print("📡 Getting HSN/SAC file from GST portal ...")
 
-    gkcore_root = pathlib.Path("./").resolve()
     r = requests.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
     b = io.BytesIO(r)
     wb = openpyxl.load_workbook(b)
@@ -66,7 +65,7 @@ try:
     hsn_array.extend(sac_array)
 
     # generate a json file with both hsn & sac codes
-    with open(f"{gkcore_root}/json/hsn-sac-codes.json", "w") as f:
+    with open("json/hsn-sac-codes.json", "w") as f:
         json.dump(hsn_array, f)
 
     print("total generated hsn/sac items: ", len(hsn_array))
