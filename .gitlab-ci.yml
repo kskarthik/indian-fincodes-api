@@ -1,4 +1,4 @@
-image: python:3.10-alpine
+image: python:alpine
 stages:
   - build
   - test
@@ -8,8 +8,8 @@ generate_json:
   stage: build
   script:
     - pip install requests openpyxl
-    - python3 hsn2json.py
-    - python3 news2json.py
+    - ./hsn2json.py
+    - ./news2json.py
   artifacts:
     paths:
       - json/

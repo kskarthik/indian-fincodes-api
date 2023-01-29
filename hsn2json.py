@@ -28,7 +28,6 @@ try:
     sac_array = []
 
     print("⚙ Extracting HSN/SAC from the spreadsheet ...")
-
     for i in hsn.values:
         if i[0] != "HSN Code":
             try:
@@ -40,9 +39,9 @@ try:
                 raise
 
     for i in sac.values:
-        if i[0] != "SAC Codes":
+        if i[0] != "SAC Code":
             try:
-                sac_array.append({"code": i[0], "description": i[1]})
+                sac_array.append({"code": int(i[0]), "description": i[1]})
             except:
                 print(i[0], i[1])
                 raise
@@ -50,7 +49,9 @@ try:
     print("HSN codes: ", len(hsn_array))
     print("SAC codes: ", len(sac_array))
 
-    print("Creating hsn/sac json files ...")
+    print("Total: ", len(hsn_array) + len(sac_array))
+
+    print("Creating HSN/SAC json files ...")
     # create json/ directory
     try:
         os.mkdir("json")
@@ -69,6 +70,5 @@ try:
     with open("json/hsn-sac-codes.json", "w") as f:
         json.dump(hsn_array, f)
 
-    print("total generated hsn/sac items: ", len(hsn_array))
 except Exception as e:
     print(e)
