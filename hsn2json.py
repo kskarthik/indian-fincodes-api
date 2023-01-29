@@ -13,8 +13,7 @@ Contributors
 Sai Karthik <kskarthik@disroot.org>
 """
 
-import os
-import requests, io, json, pathlib, openpyxl
+import requests, io, json, pathlib, openpyxl, os, re
 
 try:
 
@@ -32,13 +31,21 @@ try:
     print("⚙ Extracting HSN/SAC from the spreadsheet ...")
 
     for i in hsn.values:
-        if i[0] != "HSN CODES":
-            hsn_array.append({"code": int(i[0]), "desciption": i[1]})
+        if i[0] != "HSN Code":
+            try:
+                # remove white spaces in between, for some codes
+                sanitized_code_string = re.sub(r"\s+", "", str(i[0]), flags=re.UNICODE)
+                hsn_array.append({"code": int(sanitized_code_string), "desciption": i[1]})
+            except:
+                print(type(i[0]), type(i[1]))
+                raise
 
     for i in sac.values:
-
         if i[0] != "SAC Codes":
-            sac_array.append({"code": i[0], "description": i[1]})
+            try:
+                sac_array.append({"code": i[0], "description": i[1]})
+            except:
+                print(i[0], i[1])
 
     print("HSN codes: ", len(hsn_array))
     print("SAC codes: ", len(sac_array))
