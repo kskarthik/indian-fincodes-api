@@ -17,9 +17,6 @@ generate_json:
 
 hsn_sac_tests:
   stage: test
-  needs:
-    - job: generate_json
-      artifacts: true
   script:
     - pip install pytest
     - pytest
