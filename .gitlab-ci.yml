@@ -23,9 +23,6 @@ hsn_sac_tests:
 
 pages:
   stage: deploy
-  needs:
-    - job: generate_json
-      artifacts: true
   script:
     - mkdir tmp
     - mv json tmp/
