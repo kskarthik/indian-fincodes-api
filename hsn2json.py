@@ -45,6 +45,7 @@ try:
                 sac_array.append({"code": i[0], "description": i[1]})
             except:
                 print(i[0], i[1])
+                raise
 
     print("HSN codes: ", len(hsn_array))
     print("SAC codes: ", len(sac_array))
