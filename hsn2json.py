@@ -13,7 +13,7 @@ Contributors
 Sai Karthik <kskarthik@disroot.org>
 """
 
-import requests, io, json, pathlib, openpyxl, os, re
+import requests, io, json, openpyxl, os, re
 
 try:
 
@@ -49,21 +49,18 @@ try:
     print("HSN codes: ", len(hsn_array))
     print("SAC codes: ", len(sac_array))
 
-    os.mkdir("json")
 
     print("Creating hsn/sac json files ...")
-
+    # create json/ directory
+    os.mkdir("json")
     # generate hsn code json
     with open("json/hsn-codes.json", "w") as f:
         json.dump(hsn_array, f)
-
     # generate SAC codes json
     with open("json/sac-codes.json", "w") as f:
         json.dump(sac_array, f)
-
     # join SAC & HSN arrays
     hsn_array.extend(sac_array)
-
     # generate a json file with both hsn & sac codes
     with open("json/hsn-sac-codes.json", "w") as f:
         json.dump(hsn_array, f)

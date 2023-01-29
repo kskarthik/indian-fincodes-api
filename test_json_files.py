@@ -1,16 +1,18 @@
-import json
+import json, pathlib
 
 hsn_sac_data: list
 hsn_data: list
 sac_data: list
 
-with open("json/hsn-sac-codes.json") as f:
+project_root = pathlib.Path("./").resolve()
+
+with open(f"{project_root}/json/hsn-sac-codes.json") as f:
     hsn_sac_data = json.loads(f.read())
 
-with open("json/hsn-codes.json") as f:
+with open(f"{project_root}/json/hsn-codes.json") as f:
     hsn_data = json.loads(f.read())
 
-with open("json/sac-codes.json") as f:
+with open(f"{project_root}/json/sac-codes.json") as f:
     sac_data = json.loads(f.read())
 
 # check combined hsn & sac file
