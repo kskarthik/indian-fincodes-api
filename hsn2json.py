@@ -13,7 +13,7 @@ Contributors
 Sai Karthik <kskarthik@disroot.org>
 """
 
-import requests, io, json, openpyxl, os, re
+import requests, io, json, openpyxl, os, re, shutil
 
 try:
 
@@ -50,10 +50,13 @@ try:
     print("HSN codes: ", len(hsn_array))
     print("SAC codes: ", len(sac_array))
 
-
     print("Creating hsn/sac json files ...")
     # create json/ directory
-    os.mkdir("json")
+    try:
+        os.mkdir("json")
+    except:
+        shutil.rmtree("json")
+        os.mkdir("json")
     # generate hsn code json
     with open("json/hsn-codes.json", "w") as f:
         json.dump(hsn_array, f)
