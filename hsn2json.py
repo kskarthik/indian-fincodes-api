@@ -23,8 +23,8 @@ try:
     wb = openpyxl.load_workbook(b)
     hsn = wb["HSN"]
     sac = wb["SAC"]
-    hsn_array = []
-    sac_array = []
+    hsn_dict = {}
+    sac_dict = {}
 
     print("⚙ Extracting HSN/SAC from the spreadsheet ...")
     for i in hsn.values:
@@ -32,25 +32,23 @@ try:
             try:
                 # remove white spaces in between, for some codes
                 # sanitized_code_string = re.sub(r"\s+", "", str(i[0]), flags=re.UNICODE)
-                hsn_array.append(
-                    {"code": int(str(i[0]).replace(" ", "")), "desciption": i[1]}
-                )
+                hsn_dict[i[0]] = i[1]
             except:
-                print(type(i[0]), type(i[1]))
+                print(i[0], type(i[0]), i[1], type(i[1]))
                 raise
 
     for i in sac.values:
         if i[0] != "SAC Code":
             try:
-                sac_array.append({"code": int(i[0]), "description": i[1]})
+                sac_dict[i[0]] = i[1]
             except:
-                print(i[0], i[1])
+                print(i[0], type(i[0]), i[1], type(i[1]))
                 raise
 
-    print("HSN codes: ", len(hsn_array))
-    print("SAC codes: ", len(sac_array))
+    print("HSN codes: ", len(hsn_dict))
+    print("SAC codes: ", len(sac_dict))
 
-    print("Total: ", len(hsn_array) + len(sac_array))
+    print("Total: ", len(hsn_dict) + len(sac_dict))
 
     print("Creating HSN/SAC json files ...")
     # create json/ directory
@@ -61,15 +59,15 @@ try:
         os.mkdir("json")
     # generate hsn code json
     with open("json/hsn-codes.json", "w") as f:
-        json.dump(hsn_array, f)
+        json.dump(hsn_dict, f)
     # generate SAC codes json
     with open("json/sac-codes.json", "w") as f:
-        json.dump(sac_array, f)
+        json.dump(sac_dict, f)
     # join SAC & HSN arrays
-    hsn_array.extend(sac_array)
+    # hsn_dict.extend(sac_dict)
     # generate a json file with both hsn & sac codes
     with open("json/hsn-sac-codes.json", "w") as f:
-        json.dump(hsn_array, f)
+        json.dump(hsn_dict, f)
 
 except Exception as e:
     print(e)
