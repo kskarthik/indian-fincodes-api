@@ -8,7 +8,7 @@ Summary:
 Convert the hsn/sac spreadhseet provided by the GST portal
 into valid json file
 
-Contributors
+Author
 ============
 Sai Karthik <kskarthik@disroot.org>
 """
@@ -16,7 +16,6 @@ Sai Karthik <kskarthik@disroot.org>
 import requests, io, json, openpyxl, os, re, shutil
 
 try:
-
     print("📡 Getting HSN/SAC file from GST portal ...")
 
     r = requests.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
@@ -32,8 +31,10 @@ try:
         if i[0] != "HSN Code":
             try:
                 # remove white spaces in between, for some codes
-                sanitized_code_string = re.sub(r"\s+", "", str(i[0]), flags=re.UNICODE)
-                hsn_array.append({"code": int(sanitized_code_string), "desciption": i[1]})
+                # sanitized_code_string = re.sub(r"\s+", "", str(i[0]), flags=re.UNICODE)
+                hsn_array.append(
+                    {"code": int(str(i[0]).replace(" ", "")), "desciption": i[1]}
+                )
             except:
                 print(type(i[0]), type(i[1]))
                 raise
@@ -72,3 +73,4 @@ try:
 
 except Exception as e:
     print(e)
+    raise
