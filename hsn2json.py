@@ -66,8 +66,6 @@ try:
     # join SAC & HSN arrays
     # hsn_dict.extend(sac_dict)
     # generate a json file with both hsn & sac codes
-    with open("json/hsn-sac-codes.json", "w") as f:
-        json.dump(hsn_dict, f)
 
 except Exception as e:
     print(e)
