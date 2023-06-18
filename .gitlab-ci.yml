@@ -1,4 +1,4 @@
-image: python:buster
+image: python:alpine-3.18
 stages:
   - build
   - test
