@@ -8,12 +8,10 @@ generate_json:
   stage: build
   script:
     - pip install requests openpyxl==3.0.10
-    - ./hsn2json.py
-    - ./news2json.py
+    - ./main.py
   artifacts:
     paths:
-      - json/
-      - news/
+      - public/
 
 hsn_sac_tests:
   stage: test
@@ -24,10 +22,7 @@ hsn_sac_tests:
 pages:
   stage: deploy
   script:
-    - mkdir tmp
-    - mv json tmp/
-    - mv news tmp/
-    - mv tmp public
+    - ls public/
   artifacts:
     paths:
       - public

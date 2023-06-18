@@ -1,14 +1,13 @@
-import json, pathlib
+import json
 
 hsn_data: dict
 sac_data: dict
 
-project_root = pathlib.Path("./").resolve()
 
-with open(f"{project_root}/json/hsn-codes.json") as f:
+with open("public/hsn-codes.json") as f:
     hsn_data = json.loads(f.read())
 
-with open(f"{project_root}/json/sac-codes.json") as f:
+with open("public/sac-codes.json") as f:
     sac_data = json.loads(f.read())
 
 
@@ -40,6 +39,6 @@ def test_sac_codes():
 
 
 def test_news_summary():
-    with open("news/summary.json", "r") as f:
+    with open("public/news/summary.json", "r") as f:
         news_list = json.loads(f.read())
         assert len(news_list) > 0
