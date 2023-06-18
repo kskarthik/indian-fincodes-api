@@ -7,7 +7,7 @@ stages:
 generate_json:
   stage: build
   script:
-    - pip install requests openpyxl
+    - pip install requests openpyxl==3.0.10
     - ./hsn2json.py
     - ./news2json.py
   artifacts:
