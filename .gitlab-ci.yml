@@ -1,4 +1,4 @@
-image: python:alpine-3.18
+image: python:3.9-alpine3.18
 stages:
   - build
   - test
