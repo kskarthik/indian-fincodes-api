@@ -11,17 +11,12 @@ Base URL: https://kskarthik.gitlab.io/gst-json
 
 - `/json/sac-codes.json`: Contains an array of sac code as objects
 
-- `/json/hsn-sac-codes.json`: Contains an array of both hsn & sac code as objects
-
 Schema for all hsn/sac json files:
 
 ```json
-[
-  {
-    "code": integer,
-    "desciption": string
-  }
-]
+{
+  "code": "description"
+}
 ```
 
 - `news/summary.json` - Contains gst news summary from portal as an array of objects
