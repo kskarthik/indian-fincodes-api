@@ -26,6 +26,13 @@ sac = wb["SAC"]
 hsn_dict = {}
 sac_dict = {}
 
+portal = "https://www.gst.gov.in/fomessage/newsupdates/"
+# use custom user agent, as the gst website does not seem to allow other programs
+# to access their public api
+custom_headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+}
+
 
 def export_json():
     try:
@@ -83,14 +90,6 @@ def export_csv():
         for i in sac.values:
             w.writerow([i[0], i[1]])
     print("Created CSV files")
-
-
-portal = "https://www.gst.gov.in/fomessage/newsupdates/"
-# use custom user agent, as the gst website does not seem to allow other programs
-# to access their public api
-custom_headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-}
 
 
 # news from gst portal

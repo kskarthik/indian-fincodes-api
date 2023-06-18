@@ -7,13 +7,28 @@ Base URL: https://kskarthik.gitlab.io/gst-utils
 
 ## Endpoints
 
-- `/hsn-codes.json`: Contains an array of hsn code as objects
-
-- `/sac-codes.json`: Contains an array of sac code as objects
+- `/hsn-codes.json`: HSN codes json
+- `/sac-codes.json`: SAC codes json
 - `/hsn.csv`: HSN codes as csv
 - `/sac.csv`: SAC codes as csv
 
-Schema for all hsn/sac json files:
+## Examples
+
+Get the response using curl
+
+```sh
+curl https://kskarthik.gitlab.io/gst-utils/sac-codes.json
+```
+
+Download the csv with wget
+
+```sh
+wget https://kskarthik.gitlab.io/gst-utils/hsn.csv
+```
+
+## Schema
+
+For hsn/sac json files
 
 ```json
 {
@@ -51,4 +66,18 @@ Schema:
   "title": string,
   "date": string
 }
+```
+
+#### Example:
+
+For summary of news:
+
+```sh
+curl https://kskarthik.gitlab.io/gst-utils/news/summary.json
+```
+
+For each news item in detail:
+
+```sh
+curl https://kskarthik.gitlab.io/gst-utils/news/588.json
 ```
