@@ -1,83 +1,23 @@
-# GST Utils
+# Indian Fincodes API
 
-This repository provides HSN & SAC codes, gst news of Indian GST as json, csv. Generated using gitlab's CI/CD infra.
-Data is refreshed every day, using gitlab's pipeline schedules.
+This repository contains scripts which builds a REST API service which currently gives access to the following codes:
 
-Base URL: https://kskarthik.gitlab.io/gst-utils
+- Pincodes
+- IFSC
+- HSN & SAC
 
-## Endpoints
+The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & creates a new image.
 
-- `/hsn-codes.json`: HSN codes json
-- `/sac-codes.json`: SAC codes json
-- `/hsn.csv`: HSN codes as csv
-- `/sac.csv`: SAC codes as csv
-
-## Examples
-
-Get the response using curl
+[Docker repo](https://hub.docker.com/r/kskarthik/indian-fincodes)
 
 ```sh
-curl https://kskarthik.gitlab.io/gst-utils/sac-codes.json
+docker pull kskarthik/indian-fincodes:latest
+
+# set MEILI_MASTER_KEY to your preferred value
+docker run --rm -d \
+  -p 7700:7700 \
+  -e MEILI_MASTER_KEY='MASTER_KEY'\
+  kskarthik/indian-fincodes:latest
 ```
 
-Download the csv with wget
-
-```sh
-wget https://kskarthik.gitlab.io/gst-utils/hsn.csv
-```
-
-## Schema
-
-For hsn/sac json files
-
-```json
-{
-  "code": "description"
-}
-```
-
-## GST News
-
-`/news/summary.json` - Contains gst news summary from portal as an array of objects
-
-Schema:
-
-```json
-[
-    {
-      "id": integer,
-      "title": string,
-      "order": integer,
-      "date": string,
-      "IsExternal": string,
-      "linkURl": null
-    },
-]
-```
-
-`/news/{id}.json` - Contains detailed news info, where {id} is the key of a news object in `summary.json`
-
-Schema:
-
-```json
-{
-  "content": string,
-  "refID": integer,
-  "title": string,
-  "date": string
-}
-```
-
-#### Example:
-
-For summary of news:
-
-```sh
-curl https://kskarthik.gitlab.io/gst-utils/news/summary.json
-```
-
-For each news item in detail:
-
-```sh
-curl https://kskarthik.gitlab.io/gst-utils/news/588.json
-```
+To access the Web UI, Visit `http://localhost:7700` in the browser
