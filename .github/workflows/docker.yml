@@ -1,0 +1,48 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "new" ]
+  pull_request:
+    branches: [ "new" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install meilisearch openpyxl==3.0.10
+
+    - name: Start meilisearch docker
+      run: |
+        docker pull getmeili/meilisearch:latest
+        docker run --name fin -d -p 7700:7700 getmeili/meilisearch
+
+    - name: Indexing the data
+      run: |
+        python main.py
+    - name: Commit the docker container
+      run: docker commit fin kskarthik/indian-fincodes:latest
+
+    - name: Authenticate to Docker Hub
+      run: docker login -u kskarthik -p ${{ secrets.DOCKER_HUB_PWD }}
+
+    - name: Push Docker Image to Hub
+      run: docker push kskarthik/indian-fincodes:latest
