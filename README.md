@@ -7,7 +7,7 @@ This repository contains scripts which builds a REST API service which currently
 - Banks
 - HSN & SAC
 
-The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & creates a new image.
+The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & a new image is created from it & pushed to docker hub.
 
 [Docker repo](https://hub.docker.com/r/kskarthik/indian-fincodes)
 
