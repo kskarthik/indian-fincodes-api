@@ -1,9 +1,10 @@
 # Indian Fincodes API
+![image](https://github.com/kskarthik/indian-fincodes-api/assets/11899221/6f556c36-ec96-42fd-a016-20f3664b4c77)
 
 This repository contains scripts which builds a REST API service which currently gives access to the following codes:
 
 - Pincodes
-- IFSC
+- Banks
 - HSN & SAC
 
 The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & creates a new image.
