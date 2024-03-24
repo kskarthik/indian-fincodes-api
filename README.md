@@ -1,4 +1,4 @@
-# Indian Fincodes API ![docker ci badge](https://github.com/movim/movim/actions/workflows/docker.yml/badge.svg?event=push)
+# Indian Financial codes API ![docker ci badge](https://github.com/movim/movim/actions/workflows/docker.yml/badge.svg?event=push)
 
 ![image](https://github.com/kskarthik/indian-fincodes-api/assets/11899221/6f556c36-ec96-42fd-a016-20f3664b4c77)
 
@@ -8,12 +8,15 @@ This repository contains scripts which builds a REST API service in a docker ima
 - Banks [source](https://github.com/razorpay/ifsc/)
 - HSN & SAC [source](https://services.gst.gov.in/services/searchhsnsac)
 
-The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & a new image is created from it & pushed to docker hub.
+# How it's done
+The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & a new image is created from it & pushed to docker hub. All this process is automated using github actions.
 
-Links:
+# Links
 
 - [Docker repo](https://hub.docker.com/r/kskarthik/indian-fincodes-api)
 - [API Reference](https://www.meilisearch.com/docs/reference/api/overview)
+
+# Usage
 
 ```sh
 docker pull kskarthik/indian-fincodes-api:latest
