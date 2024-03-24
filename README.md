@@ -2,15 +2,18 @@
 
 ![image](https://github.com/kskarthik/indian-fincodes-api/assets/11899221/6f556c36-ec96-42fd-a016-20f3664b4c77)
 
-This repository contains scripts which builds a REST API service which currently gives access to the following codes:
+This repository contains scripts which builds a REST API service in a docker image. The follwing data is provided:
 
-- Pincodes
-- Banks
-- HSN & SAC
+- Pincodes [source](https://data.gov.in/catalog/all-india-pincode-directory)
+- Banks [source](https://github.com/razorpay/ifsc/)
+- HSN & SAC [source](https://services.gst.gov.in/services/searchhsnsac)
 
 The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & a new image is created from it & pushed to docker hub.
 
-[Docker repo](https://hub.docker.com/r/kskarthik/indian-fincodes-api)
+Links:
+
+- [Docker repo](https://hub.docker.com/r/kskarthik/indian-fincodes-api)
+- [API Reference](https://www.meilisearch.com/docs/reference/api/overview)
 
 ```sh
 docker pull kskarthik/indian-fincodes-api:latest
