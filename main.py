@@ -3,9 +3,6 @@
 """
 License: GPLv3 https://www.gnu.org/licenses/gpl-3.0-standalone.html
 
-Summary:
-======== Convert the hsn/sac spreadhseet provided by the GST portal into valid json file
-
 Author
 ============
 Sai Karthik <kskarthik@disroot.org>
