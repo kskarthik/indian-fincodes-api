@@ -28,4 +28,4 @@ docker run --rm -d \
   kskarthik/indian-fincodes-api:latest
 ```
 
-To access the Web UI, Visit `http://localhost:7700` in the browser
+To access the server, Visit `http://localhost:7700` in the browser
