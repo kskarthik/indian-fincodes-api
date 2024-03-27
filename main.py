@@ -10,24 +10,12 @@ Sai Karthik <kskarthik@disroot.org>
 
 import time
 import io
-import json
 import meilisearch
 import openpyxl
-import os
-import shutil
 import csv
 import requests as r
 import requests
 
-print("📡 Getting HSN/SAC file from GST portal ...")
-
-res = r.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
-b = io.BytesIO(res)
-wb = openpyxl.load_workbook(b)
-hsn = wb["HSN"]
-sac = wb["SAC"]
-hsn_dict = {}
-sac_dict = {}
 
 client = meilisearch.Client("http://127.0.0.1:7700", "masterKey")
 
@@ -36,7 +24,7 @@ def index_ifsc_codes():
     try:
         api = "https://api.github.com/repos/razorpay/ifsc/releases?per_page=1"
 
-        print("📡Fetching latest IFSC release ...")
+        print("📡 Fetching the latest IFSC release ...")
 
         r = requests.get(api)
 
@@ -68,9 +56,20 @@ def index_ifsc_codes():
     except Exception as e:
         print(e)
 
-
+#TODO: directly download pincodes from gov portal.
 def index_pin_codes():
-    with open("pincode.csv", "rt") as f:
+    try:
+# https://data.gov.in/sites/default/files/all_india_pin_code.csv
+        print("📡 Fetching the latest pincodes file from the gov.in portal ...")
+
+        res = r.get("https://data.gov.in/sites/default/files/all_india_pin_code.csv").text
+        with open("pincodes.csv", "wt") as f:
+            f.write(res)
+    except Exception as e:
+        print("Failed to fetch pincodes")
+        print(e)
+
+    with open("pincodes.csv", "rt") as f:
         codes = csv.DictReader(f)
         pincode_list = []
         count: int = 0
@@ -83,6 +82,15 @@ def index_pin_codes():
 
 
 def index_hsn_sac_codes():
+
+    print("📡 Fetching the latest HSN/SAC file from the GST portal ...")
+
+    res = r.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
+    b = io.BytesIO(res)
+    wb = openpyxl.load_workbook(b)
+    hsn = wb["HSN"]
+    sac = wb["SAC"]
+
     all_codes: list = []
     count: int = 0
     for i in hsn.values:
@@ -98,6 +106,7 @@ def index_hsn_sac_codes():
     client.index("hsn_sac_codes").add_documents(all_codes, primary_key="id")
 
     print(f"Indexed {len(all_codes)} HSN/SAC codes")
+    # just give some time for indexing the data
     time.sleep(5)
     # create_dump()
 
