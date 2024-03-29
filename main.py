@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 
 """
-License: GPLv3 https://www.gnu.org/licenses/gpl-3.0-standalone.html
+License: 
+========
+GPLv3 https://www.gnu.org/licenses/gpl-3.0-standalone.html
+
+Summary
+=======
+This file contains functions which fetch the codes from 
+various sources, format the data & index them to the API server.
 
 Author
-============
+======
 Sai Karthik <kskarthik@disroot.org>
 """
 
@@ -56,10 +63,8 @@ def index_ifsc_codes():
     except Exception as e:
         print(e)
 
-#TODO: directly download pincodes from gov portal.
 def index_pin_codes():
     try:
-# https://data.gov.in/sites/default/files/all_india_pin_code.csv
         print("📡 Fetching the latest pincodes file from the gov.in portal ...")
 
         res = r.get("https://data.gov.in/sites/default/files/all_india_pin_code.csv").text
@@ -80,35 +85,35 @@ def index_pin_codes():
         client.index("pincodes").add_documents(pincode_list, primary_key="id")
         print(f"Indexed {len(pincode_list)} pin codes")
 
-
 def index_hsn_sac_codes():
+    try:
+        print("📡 Fetching the latest HSN/SAC file from the GST portal ...")
+        res = r.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
+        b = io.BytesIO(res)
+        wb = openpyxl.load_workbook(b)
+        hsn = wb["HSN"]
+        sac = wb["SAC"]
 
-    print("📡 Fetching the latest HSN/SAC file from the GST portal ...")
+        all_codes: list = []
+        count: int = 0
+        for i in hsn.values:
+            if i[0] != "HSN Code":
+                all_codes.append({"id": count, "code": i[0], "desciption": i[1]})
+                count += 1
 
-    res = r.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
-    b = io.BytesIO(res)
-    wb = openpyxl.load_workbook(b)
-    hsn = wb["HSN"]
-    sac = wb["SAC"]
+        for i in sac.values:
+            if i[0] != "SAC Code":
+                all_codes.append({"id": count, "code": i[0], "desciption": i[1]})
+                count += 1
 
-    all_codes: list = []
-    count: int = 0
-    for i in hsn.values:
-        if i[0] != "HSN Code":
-            all_codes.append({"id": count, "code": i[0], "desciption": i[1]})
-            count += 1
+        client.index("hsn_sac_codes").add_documents(all_codes, primary_key="id")
 
-    for i in sac.values:
-        if i[0] != "SAC Code":
-            all_codes.append({"id": count, "code": i[0], "desciption": i[1]})
-            count += 1
-
-    client.index("hsn_sac_codes").add_documents(all_codes, primary_key="id")
-
-    print(f"Indexed {len(all_codes)} HSN/SAC codes")
-    # just give some time for indexing the data
-    time.sleep(5)
-    # create_dump()
+        print(f"Indexed {len(all_codes)} HSN/SAC codes")
+        # just give some time for indexing the data
+        time.sleep(5)
+    except Exception as e:
+        print("Failed to index HSN_SAC pincodes")
+        print(e)
 
 index_ifsc_codes()
 index_pin_codes()
