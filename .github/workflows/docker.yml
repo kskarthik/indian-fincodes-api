@@ -35,14 +35,16 @@ jobs:
         docker pull getmeili/meilisearch:latest
         docker run --name fin -d -p 7700:7700 getmeili/meilisearch
 
-    - name: Indexing the data
-      run: |
-        python main.py
-    - name: Commit the docker container
-      run: docker commit fin kskarthik/indian-fincodes-api:latest
-    
+    - name: Index the data to the API server
+      run: python main.py
+
+    # make sure all tests pass
     - name: Test API's
       run: pytest -v
+    
+    # docker related ops
+    - name: Commit the docker container
+      run: docker commit fin kskarthik/indian-fincodes-api:latest
 
     - name: Authenticate to Docker Hub
       run: docker login -u kskarthik -p ${{ secrets.DOCKER_HUB_PWD }}
