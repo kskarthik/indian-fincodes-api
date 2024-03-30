@@ -66,8 +66,7 @@ def index_ifsc_codes():
 def index_pin_codes():
     try:
         print("📡 Fetching the latest pincodes file from the gov.in portal ...")
-
-        res = r.get("https://data.gov.in/sites/default/files/all_india_pin_code.csv").text
+        res = r.get("https://data.gov.in/files/ogdpv2dms/s3fs-public/dataurl31052019/Pincode_30052019.csv").text
         with open("pincodes.csv", "wt") as f:
             f.write(res)
     except Exception as e:
@@ -115,8 +114,8 @@ def index_hsn_sac_codes():
         print("Failed to index HSN_SAC pincodes")
         print(e)
 
-index_ifsc_codes()
 index_pin_codes()
+index_ifsc_codes()
 index_hsn_sac_codes()
 
 
