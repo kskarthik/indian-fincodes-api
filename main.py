@@ -112,11 +112,11 @@ def index_hsn_sac_codes():
         print("Failed to index HSN_SAC pincodes")
         print(e)
 
-index_pin_codes()
 index_ifsc_codes()
+index_pin_codes()
 index_hsn_sac_codes()
 
-# just give some time for indexing the data
+# just give some time for meilisearch to index the data properly
 time.sleep(10)
 
 # portal = "https://www.gst.gov.in/fomessage/newsupdates/"
