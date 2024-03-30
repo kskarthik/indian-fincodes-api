@@ -108,8 +108,6 @@ def index_hsn_sac_codes():
         client.index("hsn_sac_codes").add_documents(all_codes, primary_key="id")
 
         print(f"Indexed {len(all_codes)} HSN/SAC codes")
-        # just give some time for indexing the data
-        time.sleep(5)
     except Exception as e:
         print("Failed to index HSN_SAC pincodes")
         print(e)
@@ -118,6 +116,8 @@ index_pin_codes()
 index_ifsc_codes()
 index_hsn_sac_codes()
 
+# just give some time for indexing the data
+time.sleep(10)
 
 # portal = "https://www.gst.gov.in/fomessage/newsupdates/"
 # # use custom user agent, as the gst portal allow other programs
