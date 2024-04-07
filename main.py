@@ -15,14 +15,13 @@ Author
 Sai Karthik <kskarthik@disroot.org>
 """
 
-import time
 import io
 import meilisearch
 import openpyxl
 import csv
 import requests as r
 import requests
-
+import threading
 
 client = meilisearch.Client("http://127.0.0.1:7700", "masterKey")
 
@@ -112,12 +111,18 @@ def index_hsn_sac_codes():
         print("Failed to index HSN_SAC pincodes")
         print(e)
 
-index_ifsc_codes()
-index_pin_codes()
-index_hsn_sac_codes()
+
+threading.Thread(target=index_ifsc_codes).start()
+threading.Thread(target=index_pin_codes).start()
+threading.Thread(target=index_hsn_sac_codes).start()
 
 # just give some time for meilisearch to index the data properly
-time.sleep(10)
+# time.sleep(10)
+
+
+# index_ifsc_codes()
+# index_pin_codes()
+# index_hsn_sac_codes()
 
 # portal = "https://www.gst.gov.in/fomessage/newsupdates/"
 # # use custom user agent, as the gst portal allow other programs
