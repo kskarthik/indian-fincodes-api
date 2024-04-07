@@ -117,10 +117,6 @@ threading.Thread(target=index_ifsc_codes).start()
 threading.Thread(target=index_pin_codes).start()
 threading.Thread(target=index_hsn_sac_codes).start()
 
-# just give some time for meilisearch to index the data properly
-time.sleep(10)
-
-
 # index_ifsc_codes()
 # index_pin_codes()
 # index_hsn_sac_codes()

@@ -36,7 +36,9 @@ jobs:
         docker run --name fin -d -p 7700:7700 getmeili/meilisearch
 
     - name: Index the data to the API server
-      run: python main.py
+      run: |
+        python main.py
+        sleep 20
 
     # make sure all tests pass
     - name: Test API's
