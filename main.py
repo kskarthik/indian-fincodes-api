@@ -22,6 +22,7 @@ import csv
 import requests as r
 import requests
 import threading
+import time
 
 client = meilisearch.Client("http://127.0.0.1:7700", "masterKey")
 
@@ -117,7 +118,7 @@ threading.Thread(target=index_pin_codes).start()
 threading.Thread(target=index_hsn_sac_codes).start()
 
 # just give some time for meilisearch to index the data properly
-# time.sleep(10)
+time.sleep(10)
 
 
 # index_ifsc_codes()

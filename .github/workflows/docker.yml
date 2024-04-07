@@ -40,7 +40,7 @@ jobs:
 
     # make sure all tests pass
     - name: Test API's
-      run: pytest -v
+      run: pytest
     
     # docker related ops
     - name: Commit the docker container
