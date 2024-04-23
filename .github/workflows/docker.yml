@@ -6,6 +6,8 @@ name: Build docker image
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - v*
   pull_request:
     branches: [ "main" ]
 
@@ -44,12 +46,19 @@ jobs:
     - name: Test API's
       run: pytest
     
-    # docker related ops
+    # docker related ops, only run on tags
     - name: Commit the docker container
-      run: docker commit fin kskarthik/indian-fincodes-api:latest
+      if: ${{github.ref_type == 'tag'}}
+      run: |
+        docker commit fin kskarthik/indian-fincodes-api:latest
+        docker tag kskarthik/indian-fincodes-api:latest kskarthik/indian-fincodes-api:${{github.ref_name}}
 
     - name: Authenticate to Docker Hub
+      if: ${{github.ref_type == 'tag'}}
       run: docker login -u kskarthik -p ${{ secrets.DOCKER_HUB_PWD }}
 
     - name: Push Docker Image to Hub
-      run: docker push kskarthik/indian-fincodes-api:latest
+      if: ${{github.ref_type == 'tag'}}
+      run: |
+        docker push kskarthik/indian-fincodes-api:latest
+        docker push kskarthik/indian-fincodes-api:${{ github.ref_name }}

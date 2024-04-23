@@ -22,7 +22,6 @@ import csv
 import requests as r
 import requests
 import threading
-import time
 
 client = meilisearch.Client("http://127.0.0.1:7700", "masterKey")
 
