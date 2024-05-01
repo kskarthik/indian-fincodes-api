@@ -5,60 +5,62 @@ name: Build docker image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     tags:
       - v*
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+  # run this workflow every friday at 22:00
+  schedule:
+    - cron: "00 22 * * 5"
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.11"
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install meilisearch openpyxl==3.0.10 pytest
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install meilisearch openpyxl==3.0.10 pytest
 
-    - name: Start meilisearch docker
-      run: |
-        docker pull getmeili/meilisearch:latest
-        docker run --name fin -d -p 7700:7700 getmeili/meilisearch
+      - name: Start meilisearch docker
+        run: |
+          docker pull getmeili/meilisearch:latest
+          docker run --name fin -d -p 7700:7700 getmeili/meilisearch
 
-    - name: Index the data to the API server
-      run: |
-        python main.py
-        sleep 20
+      - name: Index the data to the API server
+        run: |
+          python main.py
+          sleep 20
 
-    # make sure all tests pass
-    - name: Test API's
-      run: pytest
-    
-    # docker related ops, only run on tags
-    - name: Commit the docker container
-      if: ${{github.ref_type == 'tag'}}
-      run: |
-        docker commit fin kskarthik/indian-fincodes-api:latest
-        docker tag kskarthik/indian-fincodes-api:latest kskarthik/indian-fincodes-api:${{github.ref_name}}
+      # make sure all tests pass
+      - name: Test API's
+        run: pytest
 
-    - name: Authenticate to Docker Hub
-      if: ${{github.ref_type == 'tag'}}
-      run: docker login -u kskarthik -p ${{ secrets.DOCKER_HUB_PWD }}
+      # docker related ops, only run on tags
+      - name: Commit the docker container
+        if: ${{github.ref_type == 'tag'}}
+        run: |
+          docker commit fin kskarthik/indian-fincodes-api:latest
+          docker tag kskarthik/indian-fincodes-api:latest kskarthik/indian-fincodes-api:${{github.ref_name}}
 
-    - name: Push Docker Image to Hub
-      if: ${{github.ref_type == 'tag'}}
-      run: |
-        docker push kskarthik/indian-fincodes-api:latest
-        docker push kskarthik/indian-fincodes-api:${{ github.ref_name }}
+      - name: Authenticate to Docker Hub
+        if: ${{github.ref_type == 'tag'}}
+        run: docker login -u kskarthik -p ${{ secrets.DOCKER_HUB_PWD }}
+
+      - name: Push Docker Image to Hub
+        if: ${{github.ref_type == 'tag'}}
+        run: |
+          docker push kskarthik/indian-fincodes-api:latest
+          docker push kskarthik/indian-fincodes-api:${{ github.ref_name }}
