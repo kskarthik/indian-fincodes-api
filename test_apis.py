@@ -15,14 +15,6 @@ def test_search_pincodes():
     hits = client.get_index("pincodes").search("500101")["hits"]
     assert len(hits) > 1
 
-def test_pincode_keys():
-    hits = client.get_index("pincodes").search("500101")["hits"]
-    assert [*hits[0].keys()] == pincode_keys
-
-def test_bank_keys():
-    hits = client.get_index("banks").search("karol bagh")["hits"]
-    assert [*hits[0].keys()] == bank_keys
-
 def test_search_banks():
     hits = client.get_index("banks").search("karol bagh")["hits"]
     assert len(hits) > 1
@@ -31,6 +23,14 @@ def test_search_hsnsac():
     hits = client.get_index("hsn_sac_codes").search("razor")["hits"]
     assert len(hits) > 1
 
+def test_bank_keys():
+    hits = client.get_index("banks").search("karol bagh")["hits"]
+    assert [*hits[0].keys()] == bank_keys
+
 def test_hsnsac_keys():
     hits = client.get_index("hsn_sac_codes").search("razor")["hits"]
     assert [*hits[0].keys()] == hsnsac_keys
+
+def test_pincode_keys():
+    hits = client.get_index("pincodes").search("500101")["hits"]
+    assert [*hits[0].keys()] == pincode_keys
