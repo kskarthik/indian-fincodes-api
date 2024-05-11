@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install meilisearch openpyxl==3.0.10 pytest
+          pip install -r requirements.txt
 
       - name: Start meilisearch docker
         run: |
