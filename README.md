@@ -11,11 +11,19 @@ The following data is provided:
 - HSN & SAC [source](https://services.gst.gov.in/services/searchhsnsac)
 
 # How it's done
-The data is fetched from various sources, processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image & a new image is created from it & pushed to docker hub. All this process is automated using github actions.
+
+0. The data is fetched from various sources
+1. Data is processed and indexed to the [meilisearch](https://www.meilisearch.com) docker image
+2. Tests are preformed against the docker image to make sure the data is properly indexed
+3. A new image is created & tagged
+4. Pushed to docker hub
+
+> [!NOTE]
+> This process is automated using github actions.
 
 # Links
 
-- [Docker repo](https://hub.docker.com/r/kskarthik/indian-fincodes-api)
+- [Dockerhub repo](https://hub.docker.com/r/kskarthik/indian-fincodes-api)
 - [Meilisearch API Reference](https://www.meilisearch.com/docs/reference/api/overview)
 
 # Usage
@@ -32,12 +40,15 @@ docker run --rm -d \
 
 To access the server, Visit `http://localhost:7700` in the browser
 
-# Examples
+# API Examples
+
+> [!NOTE]
+> Meilisearch [API Reference](https://www.meilisearch.com/docs/reference/api/overview) has in-depth documentation regarding various search features
 
 Get the list of indexes:
 
 ```sh
-curl http://localhost:7700/indexes 
+curl http://localhost:7700/indexes
 {
   "results": [
     {
