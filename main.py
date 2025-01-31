@@ -89,8 +89,8 @@ def index_hsn_sac_codes():
         res = r.get("https://tutorial.gst.gov.in/downloads/HSN_SAC.xlsx").content
         b = io.BytesIO(res)
         wb = openpyxl.load_workbook(b)
-        hsn = wb["HSN"]
-        sac = wb["SAC"]
+        hsn = wb["HSN_MSTR"]
+        sac = wb["SAC_MSTR"]
 
         all_codes: list = []
         count: int = 0
